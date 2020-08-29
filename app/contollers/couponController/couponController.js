@@ -11,7 +11,7 @@ module.exports.createCoupon = (req, res) => {
       res.status("200").json({ coupon });
     })
     .catch((err) => {
-      res.status("500").json(err);
+      res.status("400").json(err);
     });
 };
 
@@ -69,14 +69,13 @@ module.exports.validateCoupon = (req, res) => {
 
   Coupon.findOne({ _id: id })
     .then((coupon) => {
-      console.log(checkValidity);
       if (checkValidity(coupon, totalCartAmt)) {
         let discountAmount = calculateDiscount(coupon, totalCartAmt);
         res.status("200").json({ discountAmount });
       } else {
         if (totalCartAmt < coupon.minPurchaseAmt) {
           res
-            .status("404")
+            .status("400")
             .send(
               "Looks like the cart amount is less than minimum purchase amount to avail the coupon"
             );
