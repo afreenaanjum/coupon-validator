@@ -9,7 +9,7 @@
     "heroku-postbuild": " npm install"
   },
   "keywords": [],
-  "author": "",
+  "author": "Afreena Anjum",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
