@@ -1,6 +1,6 @@
 # Coupon Validator
 
-Coupon Validator is a Node.js server that has REST endpoint to create and validate coupon codes stored in MONGODB .
+Coupon Validator is a Node.js app that has REST endpoint to create and validate coupon codes stored in MONGODB .
 
 # About
 
