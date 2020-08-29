@@ -17,7 +17,7 @@ npm install
 npm start
 ```
 
-The API runs on port 3005 by default, and the root can be accessed by navigating to http://localhost:3005/api
+The app runs on port 3005 by default, and the root can be accessed by navigating to http://localhost:3005/api
 
 ## Usage
 
