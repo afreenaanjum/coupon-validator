@@ -14,7 +14,7 @@ mongoose
     console.log("Connected to db of coupon-validator");
   })
   .catch((err) => {
-    console.log("Error connectong to the db", err);
+    console.log("error connectong to the db", err);
   });
 
 module.exports = mongoose;

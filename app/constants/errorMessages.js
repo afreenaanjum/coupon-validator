@@ -1,4 +1,6 @@
-const ERROR_MESSAGES = Object.freeze({
+const ErrorMessages = Object.freeze({
+  COUPON_CREATE_ERROR: "Coupon can either have a percentage or flat-discount",
+  INVALID_TYPE_TOTAL_CART_AMT: "The total cart amount should be a number",
   COUPON_EXPIRED: "The coupon is expired",
   INVALID_CART_AMT:
     "Looks like the cart amount is less than minimum purchase amount to avail the coupon",
@@ -6,5 +8,5 @@ const ERROR_MESSAGES = Object.freeze({
 });
 
 module.exports = {
-  ERROR_MESSAGES,
+  ErrorMessages,
 };

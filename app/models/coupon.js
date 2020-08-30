@@ -23,7 +23,7 @@ const couponSchema = new Schema({
     type: Number,
     default: null,
   },
-  percentage: {
+  percentageDiscount: {
     type: Number,
     default: null,
   },

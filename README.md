@@ -13,7 +13,7 @@ npm install
 npm start
 ```
 
-The app runs on port 3005 by default, and the root can be accessed by navigating to http://localhost:3005/api
+The app runs on port 3005 by default.
 
 ## Usage
 
@@ -24,7 +24,7 @@ NOTE : Node.js app is deployed at [https://coupon-validate-node.herokuapp.com](h
 ```python
 Use (POST)
 
-https://coupon-validate-node.herokuapp.com/coupon/
+https://coupon-validate-node.herokuapp.com/coupon
             OR
 http://localhost:3005/coupon
 
@@ -33,8 +33,8 @@ Request body format :
   "minPurchaseAmt":1000,
   "endDate": "2021-12-12",
   "startDate":"2020-01-01",
-  "flatDiscountAmt" :100,[OPTIONAL for percentage discount coupon]
-  "percentage" : 20, [OPTIONAL for flat discount coupon]
+  "flatDiscountAmt" :100,[OPTIONAL for percentageDiscount discount coupon]
+  "percentageDiscount" : 20, [OPTIONAL for flat discount coupon]
   "maxDiscountAmt": 100, [OPTIONAL for flat discount coupon]
 }
 ```
@@ -44,7 +44,7 @@ Request body format :
 ```python
 Use (GET)
 
-https://coupon-validate-node.herokuapp.com/coupon/
+https://coupon-validate-node.herokuapp.com/coupon
             OR
 http://localhost:3005/coupon
 ```
@@ -70,11 +70,11 @@ http://localhost:3005/coupon/<ADD COUPON ID HERE>
 
 Request body format : All the fields are optional here. Only fields which needs change can be added.
 {
-  "maxDiscountAmt": 100, [OPTIONAL for percentage discount coupon]
+  "maxDiscountAmt": 100, [OPTIONAL for percentageDiscount discount coupon]
   "minPurchaseAmt":1000,
   "endDate": "2021-12-12",
   "startDate":"2020-01-01",
-  "percentage" : 20, [OPTIONAL for percentage discount coupon]
+  "percentageDiscount" : 20, [OPTIONAL for percentage discount coupon]
   "flatDiscountAmt" : 30 [OPTIONAL for flat discount coupon]
 }
 ```
