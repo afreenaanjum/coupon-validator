@@ -15,6 +15,10 @@ const couponSchema = new Schema({
     type: Number,
     required: true,
   },
+  couponType: {
+    type: String,
+    required: true,
+  },
   maxDiscountAmt: {
     type: Number,
     default: null,
@@ -26,6 +30,8 @@ const couponSchema = new Schema({
   percentageDiscount: {
     type: Number,
     default: null,
+    min: 0,
+    max: 100,
   },
   createdAt: {
     type: Date,
