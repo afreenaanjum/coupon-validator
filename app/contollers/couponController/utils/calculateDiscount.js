@@ -1,9 +1,9 @@
-const calculateDiscount = (couponDetails, totalCartAmount) => {
-  const { percentage, maxDiscountAmt } = couponDetails;
+const calculateDiscount = (couponDetails, totalCartAmt) => {
+  const { percentage, maxDiscountAmt, flatDiscountAmt } = couponDetails;
 
-  return !percentage
-    ? maxDiscountAmt
-    : Math.min((totalCartAmount * percentage) / 100, maxDiscountAmt);
+  return percentage
+    ? Math.min((totalCartAmt * percentage) / 100, maxDiscountAmt)
+    : flatDiscountAmt;
 };
 
 module.exports = { calculateDiscount };

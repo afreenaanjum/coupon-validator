@@ -17,7 +17,11 @@ const couponSchema = new Schema({
   },
   maxDiscountAmt: {
     type: Number,
-    required: true,
+    default: null,
+  },
+  flatDiscountAmt: {
+    type: Number,
+    default: null,
   },
   percentage: {
     type: Number,

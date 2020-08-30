@@ -1,14 +1,10 @@
 # Coupon Validator
 
-Coupon Validator is a Node.js server that has REST endpoint to create and validate coupon codes stored in MONGODB .
-
-# About
-
-Helps to create, get, update and delete the details of the coupon. Alongside, helps in validating coupon and calculating the max discount that can be availed from the coupon.
+Coupon Validator is a Node.js app that has REST endpoints to validate coupon-codes and perform CRUD operations on them. It uses MongoDB to store information about coupon codes.
 
 ## Installation
 
-Make sure [Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) and [MONGODB](https://docs.mongodb.com/manual/installation/) are installed locally. Once successfully completed follow further steps, if not you can skip it and get started with deployed nodejs server:
+Make sure [Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) and MongoDB are installed locally. You can dowload installer for community edition of MongoDB from [here](https://www.mongodb.com/try/download/community?tck=docs_server) and you can find the installation steps [here](https://docs.mongodb.com/manual/administration/install-community/). Once successfully completed follow further steps on the terminal, if not you can skip it and get started with the deployed Node.js app.
 
 ```bash
 git clone https://github.com/afreenaanjum/coupon-validator.git
@@ -23,23 +19,23 @@ The app runs on port 3005 by default, and the root can be accessed by navigating
 
 NOTE : Node.js app is deployed at [https://coupon-validate-node.herokuapp.com](https://coupon-validate-node.herokuapp.com)
 
-1. Creating a coupon code:
+1. Creating a coupon:
 
 ```python
 Use (POST)
 
-https://coupon-validate-node.herokuapp.com/coupons/
+https://coupon-validate-node.herokuapp.com/coupon/
             OR
-http://localhost:3005/coupouns
+http://localhost:3005/coupon
 
 Request body format :
 {
-  "maxDiscountAmt": 100,
   "minPurchaseAmt":1000,
   "endDate": "2021-12-12",
   "startDate":"2020-01-01",
-  "percentage" : 20 [OPTIONAL for flat discount coupon]
-
+  "flatDiscountAmt" :100,[OPTIONAL for percentage discount coupon]
+  "percentage" : 20, [OPTIONAL for flat discount coupon]
+  "maxDiscountAmt": 100, [OPTIONAL for flat discount coupon]
 }
 ```
 
@@ -48,9 +44,9 @@ Request body format :
 ```python
 Use (GET)
 
-https://coupon-validate-node.herokuapp.com/coupons/
+https://coupon-validate-node.herokuapp.com/coupon/
             OR
-http://localhost:3005/coupouns
+http://localhost:3005/coupon
 ```
 
 3. Getting a coupon detail:
@@ -58,9 +54,9 @@ http://localhost:3005/coupouns
 ```python
 Use (GET)
 
-https://coupon-validate-node.herokuapp.com/coupons/<ADD COUPON ID HERE>
+https://coupon-validate-node.herokuapp.com/coupon/<ADD COUPON ID HERE>
             OR
-http://localhost:3005/coupouns/<ADD COUPON ID HERE>
+http://localhost:3005/coupon/<ADD COUPON ID HERE>
 ```
 
 4. Updating a coupon detail:
@@ -68,18 +64,18 @@ http://localhost:3005/coupouns/<ADD COUPON ID HERE>
 ```python
 Use (PUT)
 
-https://coupon-validate-node.herokuapp.com/coupons/<ADD COUPON ID HERE>
+https://coupon-validate-node.herokuapp.com/coupon/<ADD COUPON ID HERE>
             OR
-http://localhost:3005/coupouns/<ADD COUPON ID HERE>
+http://localhost:3005/coupon/<ADD COUPON ID HERE>
 
 Request body format : All the fields are optional here. Only fields which needs change can be added.
 {
-  "maxDiscountAmt": 100,
+  "maxDiscountAmt": 100, [OPTIONAL for percentage discount coupon]
   "minPurchaseAmt":1000,
   "endDate": "2021-12-12",
   "startDate":"2020-01-01",
-  "percentage" : 20
-
+  "percentage" : 20, [OPTIONAL for percentage discount coupon]
+  "flatDiscountAmt" : 30 [OPTIONAL for flat discount coupon]
 }
 ```
 
@@ -88,21 +84,23 @@ Request body format : All the fields are optional here. Only fields which needs 
 ```python
 Use (DELETE)
 
-https://coupon-validate-node.herokuapp.com/coupons/<ADD COUPON ID HERE>
+https://coupon-validate-node.herokuapp.com/coupon/<ADD COUPON ID HERE>
             OR
-http://localhost:3005/coupouns/<ADD COUPON ID HERE>
+http://localhost:3005/coupon/<ADD COUPON ID HERE>
 ```
 
-6. Valiting a coupon:
+6. Validating a coupon:
 
 ```python
 Use (POST)
 
-https://coupon-validate-node.herokuapp.com/coupons/<ADD COUPON ID HERE>?totalCartAmt=<ADD TOTAL CART AMOUNT>
+https://coupon-validate-node.herokuapp.com/coupon/<ADD COUPON ID HERE>/validate
             OR
-http://localhost:3005/coupouns/<ADD COUPON ID HERE>?totalCartAmt=<ADD TOTAL CART AMOUNT>
-
-Request body format : {}
+http://localhost:3005/coupon/<ADD COUPON ID HERE>/validate
+Request body format :
+{
+  totalCartAmt: 3000
+}
 ```
 
 ## Contributing
