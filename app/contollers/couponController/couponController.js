@@ -41,7 +41,11 @@ module.exports.getCoupon = (req, res) => {
   const id = req.params.id;
   Coupon.findOne({ _id: id })
     .then((coupon) => {
-      res.status(StatusCode.success).json(coupon);
+      if (coupon) {
+        res.status(StatusCode.success).json(coupon);
+      } else {
+        res.status(StatusCode.notFound).send(ErrorMessages.DOCUMENT_NOT_FOUND);
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -80,10 +84,16 @@ module.exports.updateCoupon = (req, res) => {
 module.exports.deleteCoupon = (req, res) => {
   const id = req.params.id;
   Coupon.findOneAndDelete({ _id: id })
-    .then(() => {
-      res.status(StatusCode.success).json({});
+    .then((coupon) => {
+      console.log(coupon);
+      if (coupon) {
+        res.status(StatusCode.success).json({});
+      } else {
+        res.status(StatusCode.notFound).send(ErrorMessages.DOCUMENT_NOT_FOUND);
+      }
     })
     .catch((err) => {
+      console.log(err);
       res.status(StatusCode.notFound).json({});
     });
 };
