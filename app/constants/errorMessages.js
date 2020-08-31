@@ -1,5 +1,5 @@
 const ErrorMessages = Object.freeze({
-  COUPON_CREATE_ERROR: "Invalid or incomplete token fields.",
+  INVALID_TOKENS: "Invalid or incomplete token fields.",
   INVALID_TYPE_TOTAL_CART_AMT: "The total cart amount should be a number",
   COUPON_EXPIRED: "The coupon is expired",
   INVALID_CART_AMT:

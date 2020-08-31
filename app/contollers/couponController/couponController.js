@@ -1,16 +1,18 @@
 const { Coupon } = require("../../models/coupon");
 const { isInTimeFrame } = require("./utils/validityUtility");
 const { calculateDiscount } = require("./utils/discountUtility");
-const { validateCouponType } = require("./utils/validateCouponTypeUtility");
-const { updateCouponFields } = require("./utils/updateCouponFieldsUtility");
+const {
+  validateFieldsForDiscountType,
+} = require("./utils/couponFieldsUtility");
+const { updateCouponFields } = require("./utils/couponFieldsUtility");
 const { StatusCode } = require("../../enums/statusCodes");
 const { ErrorMessages } = require("../../constants/errorMessages");
 const { couponValidationResponse } = require("./couponValidationResponse");
 
 module.exports.createCoupon = (req, res) => {
   let data = req.body;
-  if (!validateCouponType(data)) {
-    res.status(StatusCode.badRequest).json(ErrorMessages.COUPON_CREATE_ERROR);
+  if (!validateFieldsForDiscountType(data)) {
+    res.status(StatusCode.badRequest).json(ErrorMessages.INVALID_TOKENS);
   } else {
     let updatedData = updateCouponFields(data);
     let coupon = new Coupon(updatedData);
@@ -31,7 +33,7 @@ module.exports.getAllCoupons = (req, res) => {
       res.status(StatusCode.success).json(coupons);
     })
     .catch((err) => {
-      res.status(StatusCode.error).json(err);
+      res.status(StatusCode.notFound).json(err);
     });
 };
 
@@ -43,7 +45,7 @@ module.exports.getCoupon = (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.status(StatusCode.error).json(err);
+      res.status(StatusCode.notFound).json(err);
     });
 };
 
@@ -51,8 +53,8 @@ module.exports.updateCoupon = (req, res) => {
   const id = req.params.id;
   const data = req.body;
 
-  if (data.couponType && !validateCouponType(data)) {
-    res.status(StatusCode.badRequest).json(ErrorMessages.COUPON_CREATE_ERROR);
+  if (data.discountType && !validateFieldsForDiscountType(data)) {
+    res.status(StatusCode.badRequest).json(ErrorMessages.INVALID_TOKENS);
   } else {
     Coupon.findOne({ _id: id }, (err, couponDetails) => {
       let updatedData = updateCouponFields(data);
@@ -70,7 +72,7 @@ module.exports.updateCoupon = (req, res) => {
         });
     }).catch((err) => {
       console.log(err);
-      res.status(StatusCode.error).json(err);
+      res.status(StatusCode.notFound).json(err);
     });
   }
 };
@@ -82,36 +84,41 @@ module.exports.deleteCoupon = (req, res) => {
       res.status(StatusCode.success).json({});
     })
     .catch((err) => {
-      res.status(StatusCode.error).json({});
+      res.status(StatusCode.notFound).json({});
     });
 };
 
 module.exports.validateCoupon = (req, res) => {
   const id = req.params.id;
   const { totalCartAmt } = req.body;
-
-  Coupon.findOne({ _id: id })
-    .then((coupon) => {
-      console.log(typeof totalCartAmt);
-      if (typeof totalCartAmt != "number") {
-        let response = couponValidationResponse(
-          ErrorMessages.INVALID_TYPE_TOTAL_CART_AMT
-        );
-        res.status(StatusCode.badRequest).send(response);
-      } else if (!isInTimeFrame(coupon)) {
-        let response = couponValidationResponse(ErrorMessages.COUPON_EXPIRED);
-        res.status(StatusCode.error).send(response);
-      } else if (totalCartAmt < coupon.minPurchaseAmt) {
-        let response = couponValidationResponse(ErrorMessages.INVALID_CART_AMT);
-        res.status(StatusCode.badRequest).send(response);
-      } else {
-        let discountAmount = calculateDiscount(coupon, totalCartAmt);
-        let response = couponValidationResponse("", true, discountAmount);
-        res.status(StatusCode.success).json(response);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(StatusCode.error).send(ErrorMessages.COUPON_NOT_FOUND);
-    });
+  if (typeof totalCartAmt != "number") {
+    let response = couponValidationResponse(
+      ErrorMessages.INVALID_TYPE_TOTAL_CART_AMT
+    );
+    res.status(StatusCode.badRequest).send(response);
+  } else
+    Coupon.findOne({ _id: id })
+      .then((coupon) => {
+        if (!isInTimeFrame(coupon)) {
+          let response = couponValidationResponse(ErrorMessages.COUPON_EXPIRED);
+          res.status(StatusCode.notFound).send(response);
+        } else if (totalCartAmt < coupon.minPurchaseAmt) {
+          let response = couponValidationResponse(
+            ErrorMessages.INVALID_CART_AMT
+          );
+          res.status(StatusCode.badRequest).send(response);
+        } else {
+          let discountAmount = calculateDiscount(coupon, totalCartAmt);
+          let response = couponValidationResponse(
+            "Success",
+            true,
+            discountAmount
+          );
+          res.status(StatusCode.success).json(response);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(StatusCode.notFound).send(ErrorMessages.COUPON_NOT_FOUND);
+      });
 };

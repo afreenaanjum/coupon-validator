@@ -33,10 +33,10 @@ Request body format :
   "minPurchaseAmt":1000,
   "endDate": "2021-12-12",
   "startDate":"2020-01-01",
-  "couponType" : "flat" [Can be either "flat" or "discount"]
-  "flatDiscountAmt" :100,[OPTIONAL for percentageDiscount discount coupon]
-  "percentageDiscount" : 20, [OPTIONAL for flat discount coupon]
-  "maxDiscountAmt": 100, [OPTIONAL for flat discount coupon]
+  "discountType" : "flat" [Can be either "flat" or "percentage"]
+  "flatDiscountAmt" :100,[OPTIONAL for percentage discount type ]
+  "percentageDiscount" : 20, [OPTIONAL for flat discount type  ]
+  "maxDiscountAmt": 100, [OPTIONAL for flat discount type  ]
 }
 ```
 
@@ -69,15 +69,15 @@ https://coupon-validate-node.herokuapp.com/coupon/<ADD COUPON ID HERE>
             OR
 http://localhost:3005/coupon/<ADD COUPON ID HERE>
 
-Request body format : All the fields are optional here. Only fields which needs change can be added. But if couponType is changed, then all other necessary details should be passed as well.
+Request body format : All the fields are optional here. Only fields which needs change can be added. But if discountType is changed, then all other necessary details should be passed as well.
 {
-  "couponType" : "flat", [Can be either "flat" or "discount"]
-  "maxDiscountAmt": 100, [REQUIRED for percentage discount type coupon ]
+  "discountType" : "flat", [Can be either "flat" or "percentage"]
+  "maxDiscountAmt": 100, [REQUIRED for percentage discount type  ]
   "minPurchaseAmt":1000,
   "endDate": "2021-12-12",
   "startDate":"2020-01-01",
-  "percentageDiscount" : 20, [REQUIRED for percentage discount type coupon ]
-  "flatDiscountAmt" : 30 [REQUIRED for flat discount type coupon ]
+  "percentageDiscount" : 20, [REQUIRED for percentage discount type  ]
+  "flatDiscountAmt" : 30 [REQUIRED for flat discount type  ]
 }
 ```
 
