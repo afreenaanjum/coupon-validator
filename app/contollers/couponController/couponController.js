@@ -1,5 +1,5 @@
 const { Coupon } = require("../../models/coupon");
-const { isInTimeFrame } = require("./utils/validiateTimeUtility");
+const { isInTimeFrame } = require("./utils/validateTimeUtility");
 const { calculateDiscount } = require("./utils/calculateDiscountUtility");
 const {
   validateFieldsForDiscountType,
