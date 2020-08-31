@@ -3,8 +3,8 @@ const { isInTimeFrame } = require("./utils/validityUtility");
 const { calculateDiscount } = require("./utils/discountUtility");
 const {
   validateFieldsForDiscountType,
+  updateCouponFields,
 } = require("./utils/couponFieldsUtility");
-const { updateCouponFields } = require("./utils/couponFieldsUtility");
 const { StatusCode } = require("../../enums/statusCodes");
 const { ErrorMessages } = require("../../constants/errorMessages");
 const { couponValidationResponse } = require("./couponValidationResponse");
@@ -91,6 +91,7 @@ module.exports.deleteCoupon = (req, res) => {
 module.exports.validateCoupon = (req, res) => {
   const id = req.params.id;
   const { totalCartAmt } = req.body;
+
   if (typeof totalCartAmt != "number") {
     let response = couponValidationResponse(
       ErrorMessages.INVALID_TYPE_TOTAL_CART_AMT
