@@ -1,4 +1,4 @@
-const { discountCouponType } = require("../../../enums/couponType");
+const { discountCouponType } = require("../../../enums/discountType");
 
 const updateCouponFields = (couponDetails) => {
   const { discountType } = couponDetails;

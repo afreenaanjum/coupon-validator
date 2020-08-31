@@ -12,7 +12,7 @@ const { couponValidationResponse } = require("./couponValidationResponse");
 module.exports.createCoupon = (req, res) => {
   let data = req.body;
   if (!validateFieldsForDiscountType(data)) {
-    res.status(StatusCode.badRequest).json(ErrorMessages.INVALID_TOKENS);
+    res.status(StatusCode.badRequest).json(ErrorMessages.INVALID_COUPON_FIELDS);
   } else {
     let updatedData = updateCouponFields(data);
     let coupon = new Coupon(updatedData);
@@ -54,7 +54,7 @@ module.exports.updateCoupon = (req, res) => {
   const data = req.body;
 
   if (data.discountType && !validateFieldsForDiscountType(data)) {
-    res.status(StatusCode.badRequest).json(ErrorMessages.INVALID_TOKENS);
+    res.status(StatusCode.badRequest).json(ErrorMessages.INVALID_COUPON_FIELDS);
   } else {
     Coupon.findOne({ _id: id }, (err, couponDetails) => {
       let updatedData = updateCouponFields(data);
